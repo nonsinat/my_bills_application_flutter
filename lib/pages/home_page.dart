@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_bills_flutter/component/colors.dart';
+import 'package:my_bills_flutter/widgets/button_bill.dart';
 import 'package:my_bills_flutter/widgets/large_button.dart';
 import 'package:my_bills_flutter/widgets/text_sized.dart';
 
@@ -22,6 +23,8 @@ class _MyHomePageState extends State<MyHomePage> {
             _headSection(),
             _listBills(),
             _payButtons(),
+            _shawdowtextContainer(),
+            _textContainer(),
           ],
         ),
       ),
@@ -55,22 +58,82 @@ class _MyHomePageState extends State<MyHomePage> {
     return Positioned(
       bottom: 2,
       right: 38,
-      child: Container(
-        height: 50,
-        width: 50,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              "assets/images/lines.png",
+      child: GestureDetector(
+        onTap: () {
+          showModalBottomSheet(
+              context: context,
+              backgroundColor: Colors.transparent,
+              barrierColor: Colors.transparent,
+              isScrollControlled: true,
+              builder: (BuildContext context) {
+                return Container(
+                  height: MediaQuery.of(context).size.height - 240,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        bottom: 0,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height - 290,
+                          color: Color(0xffeef1f4).withOpacity(.7),
+                        ),
+                      ),
+                      Positioned(
+                        top: 6,
+                        right: 36,
+                        child: Container(
+                          width: 55,
+                          height: 250,
+                          //    padding: EdgeInsets.only(top: 10, bottom: 40),
+                          decoration: BoxDecoration(
+                            color: AppColor.mainColor,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ButtonBill(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icons.cancel_outlined,
+                              ),
+                              ButtonBill(
+                                onTap: () {},
+                                icon: Icons.add,
+                                text: "Add Bill",
+                              ),
+                              ButtonBill(
+                                onTap: () {},
+                                icon: Icons.history,
+                                text: "History",
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              });
+        },
+        child: Container(
+          height: 50,
+          width: 50,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                "assets/images/lines.png",
+              ),
             ),
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(0, 1),
+                blurRadius: 15,
+                color: Color(0xff11324d).withOpacity(.2),
+              )
+            ],
           ),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 1),
-              blurRadius: 15,
-              color: Color(0xff11324d).withOpacity(.2),
-            )
-          ],
         ),
       ),
     );
@@ -274,6 +337,36 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               );
             }),
+      ),
+    );
+  }
+
+  _textContainer() {
+    return Positioned(
+      left: 40,
+      top: 80,
+      child: Text(
+        "My Bills",
+        style: TextStyle(
+          fontSize: 50,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  _shawdowtextContainer() {
+    return Positioned(
+      left: 0,
+      top: 100,
+      child: Text(
+        "My Bills",
+        style: TextStyle(
+          fontSize: 60,
+          fontWeight: FontWeight.bold,
+          color: Color(0xff293952),
+        ),
       ),
     );
   }
